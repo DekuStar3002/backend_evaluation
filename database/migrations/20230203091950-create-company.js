@@ -6,10 +6,10 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID
+        type: Sequelize.STRING,
       },
       name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       ceo: {
         type: Sequelize.STRING
@@ -18,15 +18,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       score: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
+        type: Sequelize.STRING
       },
       sector_id: {
         type: Sequelize.INTEGER
       },
       address: {
-        type: Sequelize.STRING,
-        allowNull: true,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
