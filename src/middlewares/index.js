@@ -1,3 +1,3 @@
 const bodyValidation = require('./bodyValidation');
-
-module.exports = { bodyValidation };
+const queryValidaton = require('./queryValidation');
+module.exports = { bodyValidation, queryValidaton };

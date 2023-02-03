@@ -1,3 +1,3 @@
 const companyService = require('./company');
-
-module.exports = {companyService};
+const sectorService = require('./sector');
+module.exports = {companyService, sectorService};

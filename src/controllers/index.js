@@ -1,3 +1,3 @@
 const companyController = require('./company');
-
-module.exports = { companyController };
+const sectorController = require('./sector');
+module.exports = { companyController, sectorController };

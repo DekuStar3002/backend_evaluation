@@ -1,3 +1,3 @@
 const companyRoute = require('./company');
-
-module.exports = { companyRoute };
+const sectorRoute = require('./sector');
+module.exports = { companyRoute, sectorRoute };

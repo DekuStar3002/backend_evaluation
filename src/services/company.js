@@ -2,11 +2,12 @@ const axios = require('axios');
 const { Company, Sector } = require('../../database/models');
 const utils = require('../utils');
 const { GET_COMPANY_API_URL, GET_SECTOR_API_URL } = require('../constants');
+
 const save = async ({ urlLink }) => { // FUCNTION TO SAVE COMPANY AND SECTOR DATA;
   const csv = await axios.get(urlLink);
   const lines = utils.readDataByLine(csv);
   // CREATE COMPANY DATA
-  await lines.forEach(async (line, index) => {
+  lines.map(async (line, index) => {
     if(index === 0){
       return;
     }
@@ -23,7 +24,7 @@ const save = async ({ urlLink }) => { // FUCNTION TO SAVE COMPANY AND SECTOR DAT
   });
 
   //   CREATE SECTOR DATA AND UPDATE COMPANY DATA
-  await lines.forEach(async (line, index) => {
+  lines.map(async (line, index) => {
     if(index === 0)
       return;
     const data = utils.splitString(line);
@@ -32,15 +33,14 @@ const save = async ({ urlLink }) => { // FUCNTION TO SAVE COMPANY AND SECTOR DAT
       name: data[1],
     };
     const newSector = await Sector.create(sector);
-    await sectorData.data.forEach( async (secData) => {
+    sectorData.data.map( async (secData) => {
       const score = ((Number(secData.performanceIndex[0].value) * 10) + (Number(secData.performanceIndex[1].value) / 10000) + (Number(secData.performanceIndex[2].value) * 10) + Number(secData.performanceIndex[3].value)) / 4;
       
-      await Company.update({ sector_id: newSector.id, score: `${score}` }, { where: {
+      await Company.update({ sector_id: newSector.id, score: `${score ? score : 0}` }, { where: {
         id: secData.companyId
       } });
     });
   });
-  return Company.findAll();
+  return await Company.findAll();
 };
-
 module.exports = { save };
