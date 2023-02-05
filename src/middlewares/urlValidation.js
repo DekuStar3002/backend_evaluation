@@ -1,9 +1,8 @@
 const Joi = require('joi');
 
-const bodyValidation = (req, res, next) => {
+const urlValidation = (req, res, next) => {
   const schema = Joi.object({
-    ceo: Joi.string(),
-    address: Joi.string(),
+    urlLink: Joi.string().required()
   });
   const { error } = schema.validate(req.body);
   if(error) {
@@ -13,4 +12,4 @@ const bodyValidation = (req, res, next) => {
   next();
 };
 
-module.exports = bodyValidation;
+module.exports = urlValidation;

@@ -4,6 +4,6 @@ const middlewares = require('../middlewares');
 const router = express.Router();
 
 router.route('/companies')
-  .get(middlewares.queryValidaton, sectorController.getCompanyInRank);
+  .get(middlewares.queryValidaton.sectorValidaton, sectorController.getCompanyInRank);
 
 module.exports = {router};

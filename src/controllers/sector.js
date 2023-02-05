@@ -5,25 +5,10 @@ const getCompanyInRank = async (req, res) => {
     const query = req.query;
     const data = await sectorService.getSectorAndCompany(query);
     const companies = data.company;
-    // const compare = (data1, data2) => {
-    //   if(data1.score < data2.score )
-    //     return -1;
-    //   else if(data1.score > data2.score)
-    //     return 1;
-    //   else 
-    //     return 0;
-    // };
-    console.log(data);
-    // companies.sort(compare);
-    // const responseData = companies.map(( comapny, index ) => { return {
-    //   id: comapny.id,
-    //   name: comapny.name,
-    //   ceo: comapny.ceo,
-    //   score: comapny.score,
-    //   ranking: index + 1,
-    // };
-    // });
-    res.status(200).json(data);
+    companies.sort(function(company1, company2) {
+      return company1.score < company2.score ? 1 : -1;
+    });
+    res.status(200).json(companies.map((company, index) => { return { id: company.id, name: company.name, ceo: company.ceo, score: company.score, rank: index + 1 }; }));
   } catch (error) {
     res.status(500).json({
       error: error.message
