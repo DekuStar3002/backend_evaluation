@@ -49,4 +49,36 @@ describe('Company Controller', () => {
       error: 'Internal Server Error'
     });
   });
+
+  it('should return response as array of integer when update method called', async () => {
+    jest.spyOn(companyService, 'update').mockResolvedValue([ 1 ]);
+    const mockReq = {
+      query: jest.fn(),
+      body: jest.fn(),
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+    await companyController.update(mockReq, mockRes);
+    expect(mockRes.status).toBeCalledWith(200);
+    expect(mockRes.json).toBeCalledWith([ 1 ]);
+  });
+
+  it('should return error when update method throws error', async () => {
+    jest.spyOn(companyService, 'update').mockRejectedValue(new Error('Internal Server Error'));
+    const mockReq = {
+      query: jest.fn(),
+      body: jest.fn(),
+    };
+    const mockRes = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    };
+    await companyController.update(mockReq, mockRes);
+    expect(mockRes.status).toBeCalledWith(500);
+    expect(mockRes.json).toBeCalledWith({
+      error: 'Internal Server Error'
+    });
+  });
 });
