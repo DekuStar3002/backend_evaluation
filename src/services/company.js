@@ -30,7 +30,7 @@ const save = async ({ urlLink }) => { // FUCNTION TO SAVE COMPANY AND SECTOR DAT
     const data = utils.splitString(line);
     const sectorData = await axios.get(`${GET_SECTOR_API_URL}${data[1]}`);
     var sector;
-    sector = await Sector.findOne({where: { name: data[1] }});
+    sector = await Sector.findOne({ where: { name: data[1] }});
     if(sector === null) {
       sector = await Sector.create({ name: data[1] });
     }
