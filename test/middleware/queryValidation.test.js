@@ -47,7 +47,7 @@ describe('Query Validation Middleware', () => {
     expect(mockNext).toBeCalled();
   });
 
-  it('should throw error when queryValidation.sectorValidaton cause error', async () => {
+  it('should throw error when queryValidation.idValidaton cause error', async () => {
     const mockReq = {
       query: {
         id: 1234
