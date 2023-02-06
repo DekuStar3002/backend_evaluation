@@ -178,4 +178,39 @@ describe('Company Service', () => {
       }
     ]);
   });
+
+  it('should return updated company when company present and update method called', async () => {
+    const id = '95b5a067-808a-44a9-a490-b4ef8a045f61';
+    const body = {
+      ceo: 'ceo',
+      address: 'address'
+    };
+    jest.spyOn(Company, 'findOne').mockResolvedValue({
+      data: {
+        id,
+        name: 'Volkswagen',
+        description: 'Qui dolore alias provident suscipit aliquid. Quaerat quam molestias ullam. Dolor molestias facere quia. Dolore consequuntur totam repellendus.',
+        ceo: 'Mr. Marie Sipes',
+        address: '',
+        score: '18.92',
+      }
+    });
+
+    jest.spyOn(Company, 'update').mockResolvedValue([ 1 ]);
+
+    const updatedCompany = await companyService.update(id, body);
+    expect(updatedCompany).toEqual([ 1 ]);
+  });
+
+  it('should return empty object when company not present and update method called', async () => {
+    const id = '95b5a067-808a-44a9-a490-b4ef8a045f61';
+    const body = {
+      ceo: 'ceo',
+      address: 'address'
+    };
+    jest.spyOn(Company, 'findOne').mockResolvedValue(null);
+
+    const updatedCompany = await companyService.update(id, body);
+    expect(updatedCompany).toEqual({});
+  });
 });
